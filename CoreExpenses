@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ladder Management</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem 1rem;
+    }
+    .layout { display: flex; gap: 1.5rem; width: 100%; max-width: 1100px; align-items: flex-start; }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      flex: 0 0 420px;
+      backdrop-filter: blur(10px);
+    }
+    .chart-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      flex: 1;
+      backdrop-filter: blur(10px);
+      display: block;
+    }
+    .card-header { text-align: center; margin-bottom: 2rem; }
+    h1 { color: #fff; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+    h2 { color: #fff; font-size: 1rem; font-weight: 600; margin-bottom: 1rem; text-align: center; }
+    p.sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+    .field { margin-bottom: 1.2rem; }
+    label { display: block; color: rgba(255,255,255,0.6); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.4rem; }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .prefix { position: absolute; left: 0.75rem; color: rgba(255,255,255,0.35); font-size: 0.95rem; pointer-events: none; }
+    input {
+      width: 100%;
+      padding: 0.65rem 0.75rem 0.65rem 1.6rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    input[type="number"] { padding-left: 0.75rem; }
+    input::placeholder { color: rgba(255,255,255,0.2); }
+    input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.4rem 0; }
+    .section-label { color: rgba(255,255,255,0.35); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; }
+    .row { display: flex; gap: 0.75rem; }
+    .row .field { flex: 1; }
+    button {
+      width: 100%;
+      margin-top: 1.2rem;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    button:hover { opacity: 0.9; transform: scale(1.02); }
+    button:active { transform: scale(0.98); }
+    #successMsg {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.8rem;
+      background: rgba(167,139,250,0.1);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 10px;
+      color: #a78bfa;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Left: Form -->
+    <div class="card">
+      <div class="card-header">
+        <h1>Safety First Through Ladder Management</h1>
+        <p class="sub">Ladder Management</p>
+      </div>
+
+      <div class="field">
+        <label for="age">Age</label>
+        <div class="input-wrap">
+          <input type="number" id="age" placeholder="e.g. 65" min="18" max="120" value="65" />
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p class="section-label">Guaranteed Income Sources</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="ssIncome">Social Security (H)</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="ssIncome" placeholder="30,000" value="30,000" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="ssIncomeW">Social Security (W)</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="ssIncomeW" placeholder="30,000" value="30,000" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="pensionH">Pension (H)</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="pensionH" placeholder="0" value="0" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="pensionW">Pension (W)</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="pensionW" placeholder="0" value="0" />
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p class="section-label">Yearly Expenses</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="coreExpenses">Core</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="coreExpenses" placeholder="80,000" value="80,000" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="leisureExpenses">Leisure</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="leisureExpenses" placeholder="30,000" value="30,000" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="legacyGoals">Legacy Goals</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="text" id="legacyGoals" placeholder="0" value="0" />
+          </div>
+        </div>
+      </div>
+
+      <button id="submitBtn">Submit</button>
+      <div id="successMsg">✓ Your information has been saved!</div>
+    </div>
+
+    <!-- Right: Chart -->
+    <div class="chart-card" id="chartSection">
+      <h2>Guaranteed Income Sources (Age → 100)</h2>
+      <div style="height: 500px;">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script>
+    function parseVal(id) {
+      return parseFloat(document.getElementById(id).value.replace(/,/g, '')) || 0;
+    }
+
+    ['ssIncome','ssIncomeW','pensionH','pensionW','coreExpenses','leisureExpenses','legacyGoals'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function () {
+        const raw = this.value.replace(/,/g, '').replace(/\D/g, '');
+        this.value = raw ? Number(raw).toLocaleString() : '';
+        buildChart();
+      });
+    });
+
+    document.getElementById('age').addEventListener('input', buildChart);
+
+    let chartInstance = null;
+
+    function buildChart() {
+      const age  = parseInt(document.getElementById('age').value) || 65;
+      const ssH  = parseVal('ssIncome');
+      const ssW  = parseVal('ssIncomeW');
+      const penH = parseVal('pensionH');
+      const penW = parseVal('pensionW');
+      const core = parseVal('coreExpenses');
+
+      const labels = [], dSSH = [], dSSW = [], dPenH = [], dPenW = [], guaranteedShortfall = [];
+      for (let a = age; a <= 100; a++) {
+        labels.push(a);
+        dSSH.push(ssH);
+        dSSW.push(ssW);
+        dPenH.push(penH);
+        dPenW.push(penW);
+        guaranteedShortfall.push(Math.max(0, core - (ssH + ssW + penH + penW)));
+      }
+
+      if (chartInstance) chartInstance.destroy();
+      const ctx = document.getElementById('myChart').getContext('2d');
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            { label: 'Social Security (H)',   data: dSSH,                backgroundColor: '#a78bfa', barPercentage: 1.0, categoryPercentage: 1.0, stack: 'stack' },
+            { label: 'Social Security (W)',   data: dSSW,                backgroundColor: '#60a5fa', barPercentage: 1.0, categoryPercentage: 1.0, stack: 'stack' },
+            { label: 'Pension (H)',           data: dPenH,               backgroundColor: '#34d399', barPercentage: 1.0, categoryPercentage: 1.0, stack: 'stack' },
+            { label: 'Pension (W)',           data: dPenW,               backgroundColor: '#f97316', barPercentage: 1.0, categoryPercentage: 1.0, stack: 'stack' },
+            { label: 'Guaranteed Shortfall',  data: guaranteedShortfall, backgroundColor: '#ef4444', barPercentage: 1.0, categoryPercentage: 1.0, stack: 'stack' }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.6)', font: { size: 12 } } },
+            tooltip: { callbacks: { label: c => `${c.dataset.label}: $${c.parsed.y.toLocaleString()}` } }
+          },
+          scales: {
+            x: { stacked: true, title: { display: true, text: 'Age', color: 'rgba(255,255,255,0.5)' }, ticks: { color: 'rgba(255,255,255,0.5)' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { stacked: true, title: { display: true, text: 'Amount ($)', color: 'rgba(255,255,255,0.5)' }, ticks: { color: 'rgba(255,255,255,0.5)', callback: v => `$${v.toLocaleString()}` }, grid: { color: 'rgba(255,255,255,0.05)' } }
+          }
+        }
+      });
+    }
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const age = parseInt(document.getElementById('age').value);
+      if (!age) { alert('Please enter your age.'); return; }
+      const msg = document.getElementById('successMsg');
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 4000);
+      buildChart();
+    });
+
+    buildChart();
+  </script>
+</body>
+</html>
