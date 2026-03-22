@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Retiree's Challenge</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      padding: 3rem 1.5rem;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Hero */
+    .hero { text-align: center; margin-bottom: 3.5rem; }
+    .hero .eyebrow {
+      display: inline-block;
+      background: rgba(239,68,68,0.15);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #f87171;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+    .hero h1 span { color: #a78bfa; }
+    .hero p { color: rgba(255,255,255,0.55); font-size: 1.05rem; line-height: 1.75; max-width: 620px; margin: 0 auto; }
+
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 2.5rem 0; }
+    .section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.35); margin-bottom: 1.2rem; }
+
+    /* Risk Cards */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+    .risk-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: border-color 0.3s;
+    }
+    .risk-card:hover { border-color: rgba(167,139,250,0.35); }
+    .risk-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+    .badge-red    { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+    .badge-amber  { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+    .badge-purple { background: rgba(167,139,250,0.12);color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
+    .badge-blue   { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.25); }
+    .badge-green  { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+    .badge-pink   { background: rgba(244,114,182,0.12);color: #f472b6; border: 1px solid rgba(244,114,182,0.25); }
+
+    .risk-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .risk-card p  { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+
+    /* Capital Gains Section */
+    .gains-section {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 18px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .gains-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: #f87171; }
+    .gains-section .intro { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+
+    .gains-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .gains-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 1.1rem;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .gains-item .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.35); margin-bottom: 0.4rem; }
+    .gains-item .value { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .gains-item .desc  { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .red    { color: #f87171; }
+    .amber  { color: #fbbf24; }
+    .green  { color: #34d399; }
+    .purple { color: #a78bfa; }
+
+    /* Strategies */
+    .strategies { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2.5rem; }
+    .strategy {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem;
+    }
+    .strategy-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .strategy h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .strategy p  { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(167,139,250,0.07);
+      border: 1px solid rgba(167,139,250,0.18);
+      border-radius: 16px;
+    }
+    .cta h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .cta p  { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: 1.2rem; }
+    .cta-btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      color: #fff;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: opacity 0.2s, transform 0.15s;
+      cursor: pointer; border: none;
+    }
+    .cta-btn:hover { opacity: 0.9; transform: scale(1.03); }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="eyebrow">Retirement Planning</div>
+      <h1>The <span>Retiree's</span> Challenge</h1>
+      <p>Retirement brings a new set of financial risks that working years never prepared you for. Understanding capital gains exposure and key retirement risks is the first step to building a resilient plan.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Retirement Risks -->
+    <p class="section-title">Core Retirement Risks</p>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <span class="risk-badge badge-red">High Impact</span>
+        <h3>Sequence of Returns Risk</h3>
+        <p>Poor market returns early in retirement can permanently damage a portfolio — even if long-term averages recover. Withdrawals during downturns lock in losses.</p>
+      </div>
+      <div class="risk-card">
+        <span class="risk-badge badge-amber">Ongoing</span>
+        <h3>Longevity Risk</h3>
+        <p>Outliving your assets is one of the greatest threats in retirement. With life expectancies rising, a 30+ year retirement is increasingly common.</p>
+      </div>
+      <div class="risk-card">
+        <span class="risk-badge badge-purple">Hidden</span>
+        <h3>Inflation Risk</h3>
+        <p>Even modest inflation silently erodes purchasing power. A 3% annual rate cuts the value of money in half over 24 years — devastating for fixed-income retirees.</p>
+      </div>
+      <div class="risk-card">
+        <span class="risk-badge badge-blue">Variable</span>
+        <h3>Healthcare Risk</h3>
+        <p>Medical expenses in retirement can be substantial and unpredictable. Long-term care costs alone can quickly deplete even well-funded retirement portfolios.</p>
+      </div>
+      <div class="risk-card">
+        <span class="risk-badge badge-green">Manageable</span>
+        <h3>Withdrawal Rate Risk</h3>
+        <p>Withdrawing too much too soon accelerates portfolio depletion. Finding the right sustainable withdrawal rate is critical to long-term financial health.</p>
+      </div>
+      <div class="risk-card">
+        <span class="risk-badge badge-pink">Often Overlooked</span>
+        <h3>Tax & Capital Gains Risk</h3>
+        <p>Unplanned capital gains distributions and RMDs can push retirees into higher tax brackets, increasing Medicare premiums and reducing Social Security benefits.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Capital Gains Section -->
+    <div class="gains-section">
+      <h2>Capital Gains in Retirement</h2>
+      <p class="intro">Capital gains can be one of the most overlooked challenges retirees face. Unlike during working years, retirees have limited ability to offset gains with income deductions — making proactive tax planning essential.</p>
+      <div class="gains-grid">
+        <div class="gains-item">
+          <div class="label">Short-Term Rate</div>
+          <div class="value red">Up to 37%</div>
+          <div class="desc">Assets held less than 1 year taxed as ordinary income.</div>
+        </div>
+        <div class="gains-item">
+          <div class="label">Long-Term Rate</div>
+          <div class="value amber">0% – 20%</div>
+          <div class="desc">Assets held over 1 year qualify for preferential rates.</div>
+        </div>
+        <div class="gains-item">
+          <div class="label">IRMAA Threshold</div>
+          <div class="value purple">$103,000+</div>
+          <div class="desc">Capital gains can trigger higher Medicare Part B & D premiums.</div>
+        </div>
+        <div class="gains-item">
+          <div class="label">0% Rate Ceiling</div>
+          <div class="value green">$94,050</div>
+          <div class="desc">Married couples below this MAGI threshold pay 0% on long-term gains.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <hr class="divider">
+
+    <!-- CTA -->
+    <div class="cta">
+      <h3>Ready to Build Your Resilient Retirement Plan?</h3>
+      <p>Understanding the risks is the first step. A proactive strategy can protect your income and legacy for decades to come.</p>
+      <a href="YOUR_URL_HERE" class="cta-btn">Learn about the 4 Ways to Invest in Retirement</a>
+    </div>
+
+  </div>
+</body>
+</html>
